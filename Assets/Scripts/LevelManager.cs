@@ -5,6 +5,9 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
 
+    [Header("Attributes")]
+    [SerializeField] private int baseIncome = 200;
+
     public static LevelManager main;
 
     public Transform startPoint;
@@ -19,7 +22,7 @@ public class LevelManager : MonoBehaviour
 
     private void Start()
     {
-        currency = 100;
+        currency = baseIncome;
     }
 
     public void IncreaseCurrency(int amount)

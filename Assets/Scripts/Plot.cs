@@ -9,7 +9,8 @@ public class Plot : MonoBehaviour
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Color hoverColor;
 
-    private GameObject tower;
+    public GameObject towerObj;
+    public Turret turret;
     private Color startColor;
 
     private void Start()
@@ -29,7 +30,15 @@ public class Plot : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (tower != null) return;
+        // If menu is open, return and don't make it posible for user to place towers.
+        if (MenuManager.main.IsHoveringMenu()) return;
+
+        // If there is a turret, open the upgrade menu
+        if (towerObj != null)
+        {
+            turret.OpenUpgradeMenu();
+            return;
+        }
 
         Tower towerToBuild = BuildManager.main.GetSelectedTower();
 
@@ -47,7 +56,8 @@ public class Plot : MonoBehaviour
         position.y += 0.15f;
         position.x -= 0.06f;
 
-        tower = Instantiate(towerToBuild.prefab, position, Quaternion.identity);
+        towerObj = Instantiate(towerToBuild.prefab, position, Quaternion.identity);
+        turret = towerObj.GetComponent<Turret>();
     }
 
 }

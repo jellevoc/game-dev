@@ -4253,7 +4253,7 @@ MonoBehaviour:
   m_Intensity: 1
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 000000002758f40a
+  m_ApplyToSortingLayers: 000000002758f40a53ad42fb
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -4551,7 +4551,7 @@ GameObject:
   - component: {fileID: 652069857}
   - component: {fileID: 652069856}
   m_Layer: 5
-  m_Name: Test Turret
+  m_Name: Slowmo Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10387,6 +10387,7 @@ GameObject:
   - component: {fileID: 1382523813}
   - component: {fileID: 1382523815}
   - component: {fileID: 1382523816}
+  - component: {fileID: 1382523817}
   m_Layer: 0
   m_Name: LevelManager
   m_TagString: Untagged
@@ -10406,6 +10407,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e22efbc64d9c441d6b0e0a7bdf1f0a72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  baseIncome: 200
   startPoint: {fileID: 1998331078}
   path:
   - {fileID: 1456913280}
@@ -10446,10 +10448,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefabs:
   - {fileID: 2902183507586344081, guid: 18ea6eaa4cff64df7913dc5200573164, type: 3}
+  - {fileID: 2902183507586344081, guid: 18ea6eaa4cff64df7913dc5200573164, type: 3}
+  - {fileID: 2902183507586344081, guid: cbf507c0dd20a44849eb22c335273102, type: 3}
   baseEnemies: 8
   enemiesPerSecond: 0.5
   timeBetweenWaves: 5
   difficultyScalingFactor: 0.75
+  enemiesPerSecondCap: 15
 --- !u!114 &1382523816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10466,9 +10471,21 @@ MonoBehaviour:
   - name: Basic Turret
     cost: 100
     prefab: {fileID: 7446238796516381634, guid: 0313f601b4e3d4d3fa3ab54b03d05ebf, type: 3}
-  - name: Test Turret
-    cost: 150
-    prefab: {fileID: 7446238796516381634, guid: 18bdd1aa8c8e44414964259dea67d6cb, type: 3}
+  - name: Slowmo Turret
+    cost: 200
+    prefab: {fileID: 3812081499413575897, guid: bc66e24adba5547ffb8bd706d3ca454f, type: 3}
+--- !u!114 &1382523817
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382523812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b0a3e27855574b34a032b3bbb17adc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1384828149
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15116,7 +15133,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Test Turret
+  m_text: 'Slowmo Turret
 
 '
   m_isRightToLeft: 0

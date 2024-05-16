@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.UI;
 
 public class Turret : MonoBehaviour
 {
@@ -10,15 +11,33 @@ public class Turret : MonoBehaviour
     [SerializeField] private LayerMask enemyMask;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firingPoint;
+    [SerializeField] private GameObject upgradeMenu;
+    [SerializeField] private Button upgradeButton;
 
 
     [Header("Attribute")]
     [SerializeField] private float targetingRange = 2.5f;
     [SerializeField] private float rotationSpeed = 200f;
     [SerializeField] private float bps = 1f; //Bullets per second
+    [SerializeField] private int baseUpgradeCost = 100;
+
+    private float bpsBase;
+    private float targetingRangeBase;
+    private float rotationSpeedBase;
 
     private Transform target;
     private float timeUntilFire;
+
+    private int level = 1;
+
+    private void Start()
+    {
+        bpsBase = bps;
+        targetingRangeBase = targetingRange;
+        rotationSpeedBase = rotationSpeed;
+
+        upgradeButton.onClick.AddListener(Upgrade);
+    }
 
     private void Update()
     {
@@ -89,6 +108,56 @@ public class Turret : MonoBehaviour
         Quaternion targetRotation = Quaternion.Euler(new Vector3(0, 0, angle));
         turretRotationPoint.rotation = Quaternion.RotateTowards(turretRotationPoint.rotation, targetRotation,
         rotationSpeed * Time.deltaTime);
+    }
+
+    public void OpenUpgradeMenu()
+    {
+        upgradeMenu.SetActive(true);
+    }
+
+    public void CloseUpgradeMenu()
+    {
+        upgradeMenu.SetActive(false);
+        MenuManager.main.SetHoveringState(false);
+    }
+
+    public void Upgrade()
+    {
+        if (CalculateUpgradeCost() > LevelManager.main.currency) return;
+
+        LevelManager.main.SpendCurrency(CalculateUpgradeCost());
+
+        level++;
+
+        bps = CalculateBPS();
+        targetingRange = CalculateRange();
+        // rotationSpeed = CalculateRotation();
+
+        CloseUpgradeMenu();
+        Debug.Log("New BPS: " + bps);
+        Debug.Log("New Range: " + targetingRange);
+        Debug.Log("New Cost: " + CalculateUpgradeCost());
+    }
+
+    private float CalculateBPS()
+    {
+        return bpsBase * Mathf.Pow(level, 0.6f);
+    }
+
+    private float CalculateRotation()
+    {
+        return rotationSpeedBase * Mathf.Pow(level, 0.5f);
+    }
+
+    private float CalculateRange()
+    {
+        return targetingRangeBase * Mathf.Pow(level, 0.4f);
+    }
+
+
+    private int CalculateUpgradeCost()
+    {
+        return Mathf.RoundToInt(baseUpgradeCost * Mathf.Pow(level, 0.8f));
     }
 
     private void OnDrawGizmosSelected()

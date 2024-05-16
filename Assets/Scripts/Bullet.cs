@@ -21,6 +21,8 @@ public class Bullet : MonoBehaviour
         target = _target;
     }
 
+
+    // Follow the direction of the enemy.
     void FixedUpdate()
     {
         if (!target) return;
