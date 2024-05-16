@@ -15,6 +15,7 @@ public class Bullet : MonoBehaviour
 
     private Transform target;
 
+    // Public function so it can be called in different scripts.
     public void SetTarget(Transform _target)
     {
         target = _target;
@@ -29,6 +30,7 @@ public class Bullet : MonoBehaviour
         rb.velocity = direction * bulletSpeed;
     }
 
+    // If the bullet collides with the enemy, Call the TakeDamage function in the health script and destroy the bullet.
     private void OnCollisionEnter2D(Collision2D other)
     {
         other.gameObject.GetComponent<Health>().TakeDamage(bulletDamage);

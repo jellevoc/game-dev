@@ -16,6 +16,7 @@ public class EnemyMovement : MonoBehaviour
 
     void Start()
     {
+        // Set the target to the first point (Not the startPoint!)
         target = LevelManager.main.path[pathIndex];
     }
 
@@ -25,6 +26,7 @@ public class EnemyMovement : MonoBehaviour
         {
             pathIndex++;
 
+            // If the enemy reaches the last point
             if (pathIndex == LevelManager.main.path.Length)
             {
                 EnemySpawner.onEnemyDestroy.Invoke();

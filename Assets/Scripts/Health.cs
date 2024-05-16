@@ -6,13 +6,14 @@ public class Health : MonoBehaviour
 {
 
     [Header("Attributes")]
-    [SerializeField] private int hitPoints = 2;
+    [SerializeField] private int health = 2;
 
     public void TakeDamage(int damage)
     {
-        hitPoints -= damage;
+        health -= damage;
 
-        if (hitPoints <= 0)
+        // Call the onEnemyDestroy event and destroy the enemy.
+        if (health <= 0)
         {
             EnemySpawner.onEnemyDestroy.Invoke();
             Destroy(gameObject);

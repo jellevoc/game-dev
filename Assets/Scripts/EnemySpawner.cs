@@ -25,11 +25,13 @@ public class EnemySpawner : MonoBehaviour
     private bool isSpawning = false;
 
 
+    // If the onEnemyDestroy event is called, run the EnemyDestroyed function.
     private void Awake()
     {
         onEnemyDestroy.AddListener(EnemyDestroyed);
     }
 
+    // Start the wave with a timer.
     private void Start()
     {
         StartCoroutine(StartWave());
@@ -41,6 +43,8 @@ public class EnemySpawner : MonoBehaviour
 
         timeSinceLastSpawn += Time.deltaTime;
 
+        // If timeSinceLastSpawn >= 2 and there are enemies still left to spawn.
+        // Spawn enemy and update variables.
         if (timeSinceLastSpawn >= (1f / enemiesPerSecond) && enemiesLeftToSpawn > 0)
         {
             SpawnEnemy();
@@ -49,6 +53,7 @@ public class EnemySpawner : MonoBehaviour
             timeSinceLastSpawn = 0f;
         }
 
+        // If all enemies are destroyed and there aren't any left to spawn.
         if (enemiesAlive == 0 && enemiesLeftToSpawn == 0)
         {
             EndWave();
@@ -60,6 +65,7 @@ public class EnemySpawner : MonoBehaviour
         enemiesAlive--;
     }
 
+    // Wait for timeBetweenWaves (5 seconds), before starting new wave.
     private IEnumerator StartWave()
     {
         yield return new WaitForSeconds(timeBetweenWaves);
@@ -67,6 +73,7 @@ public class EnemySpawner : MonoBehaviour
         enemiesLeftToSpawn = EnemiesPerWave();
     }
 
+    // Reset variables, add to current wave and start the StartWave timer.
     private void EndWave()
     {
         isSpawning = false;
@@ -75,6 +82,7 @@ public class EnemySpawner : MonoBehaviour
         StartCoroutine(StartWave());
     }
 
+    // Spawn enemy
     private void SpawnEnemy()
     {
         GameObject prefabToSpawn = enemyPrefabs[0];
@@ -83,6 +91,7 @@ public class EnemySpawner : MonoBehaviour
 
     private int EnemiesPerWave()
     {
+        // baseEnemies (8) * currentWave (1) ^ 0.75 = 8
         return Mathf.RoundToInt(baseEnemies * Mathf.Pow(currentWave, difficultyScalingFactor));
     }
 }
