@@ -31,7 +31,15 @@ public class Plot : MonoBehaviour
     {
         if (tower != null) return;
 
-        GameObject towerToBuild = BuildManager.main.GetSelectedTower();
+        Tower towerToBuild = BuildManager.main.GetSelectedTower();
+
+        if (towerToBuild.cost > LevelManager.main.currency)
+        {
+            Debug.Log("Cant afford");
+            return;
+        }
+
+        LevelManager.main.SpendCurrency(towerToBuild.cost);
 
         // TODO: Fix sprites
         // Manually update new position because I messed up the sprites.
@@ -39,7 +47,7 @@ public class Plot : MonoBehaviour
         position.y += 0.15f;
         position.x -= 0.06f;
 
-        tower = Instantiate(towerToBuild, position, Quaternion.identity);
+        tower = Instantiate(towerToBuild.prefab, position, Quaternion.identity);
     }
 
 }
