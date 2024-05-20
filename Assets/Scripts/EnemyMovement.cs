@@ -11,6 +11,8 @@ public class EnemyMovement : MonoBehaviour
     [Header("Attributes")]
     [SerializeField] private float moveSpeed = 2f;
 
+    private Enemy enemy;
+
     private Transform target;
     private int pathIndex = 0;
 
@@ -18,6 +20,7 @@ public class EnemyMovement : MonoBehaviour
 
     void Start()
     {
+        enemy = EnemySpawner.main.GetSelectedEnemy();
         baseSpeed = moveSpeed;
         // Set the target to the first point (Not the startPoint!)
         target = LevelManager.main.path[pathIndex];
@@ -33,6 +36,7 @@ public class EnemyMovement : MonoBehaviour
             if (pathIndex == LevelManager.main.path.Length)
             {
                 EnemySpawner.onEnemyDestroy.Invoke();
+                HealthBar.main.RemoveHealth(enemy.damage);
                 Destroy(gameObject);
                 return;
             }

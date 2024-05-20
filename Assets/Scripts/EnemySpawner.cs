@@ -1,13 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.Events;
 using UnityEngine.Events;
 
 public class EnemySpawner : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private GameObject[] enemyPrefabs;
+    [SerializeField] private Enemy[] enemies;
 
     [Header("Attributes")]
     [SerializeField] private int baseEnemies = 8;
@@ -19,6 +17,8 @@ public class EnemySpawner : MonoBehaviour
     [Header("Events")]
     public static UnityEvent onEnemyDestroy = new UnityEvent();
 
+    public static EnemySpawner main;
+
     private int currentWave = 1;
     private float timeSinceLastSpawn;
     private int enemiesAlive;
@@ -26,10 +26,13 @@ public class EnemySpawner : MonoBehaviour
     private float eps; //Enemies per second
     private bool isSpawning = false;
 
+    private int selectedEnemy = 0;
+
 
     // If the onEnemyDestroy event is called, run the EnemyDestroyed function.
     private void Awake()
     {
+        main = this;
         onEnemyDestroy.AddListener(EnemyDestroyed);
     }
 
@@ -88,9 +91,12 @@ public class EnemySpawner : MonoBehaviour
     // Spawn enemy
     private void SpawnEnemy()
     {
-        int index = Random.Range(0, enemyPrefabs.Length);
-        GameObject prefabToSpawn = enemyPrefabs[index];
-        Instantiate(prefabToSpawn, LevelManager.main.startPoint.position, Quaternion.identity);
+        SetSelectedEnemy(Random.Range(0, enemies.Length));
+        Enemy enemyToSpawn = GetSelectedEnemy();
+        Vector3 startPointPosition = LevelManager.main.startPoint.position;
+        startPointPosition.y -= 0.4f;
+        Instantiate(enemyToSpawn.prefab, startPointPosition, Quaternion.identity);
+        // Instantiate(prefabToSpawn, LevelManager.main.startPoint.position, Quaternion.identity);
     }
 
     private int EnemiesPerWave()
@@ -104,5 +110,15 @@ public class EnemySpawner : MonoBehaviour
         // baseEnemies (8) * currentWave (1) ^ 0.75 = 8
         return Mathf.Clamp(enemiesPerSecond * Mathf.Pow(currentWave, difficultyScalingFactor)
         , 0f, enemiesPerSecondCap);
+    }
+
+    public Enemy GetSelectedEnemy()
+    {
+        return enemies[selectedEnemy];
+    }
+
+    public void SetSelectedEnemy(int _selectedEnemy)
+    {
+        selectedEnemy = _selectedEnemy;
     }
 }

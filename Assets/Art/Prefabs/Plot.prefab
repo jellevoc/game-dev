@@ -145,3 +145,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sr: {fileID: 8475636423579533276}
   hoverColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+  towerObj: {fileID: 0}
+  turret: {fileID: 0}
