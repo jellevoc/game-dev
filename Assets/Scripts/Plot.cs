@@ -8,7 +8,8 @@ public class Plot : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private SpriteRenderer sr;
-    [SerializeField] private Color hoverColor;
+    [SerializeField] private Color hoverColor = new Color(255, 255, 255, 180);
+    [SerializeField] private Color occupiedPlotHoverColor = new Color(190, 0, 0, 180);
 
     public GameObject towerObj;
     public TowerBase turret;
@@ -21,6 +22,11 @@ public class Plot : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        if (gameObject.tag == "EnemyTile")
+        {
+            sr.color = occupiedPlotHoverColor;
+            return;
+        }
         sr.color = hoverColor;
     }
 

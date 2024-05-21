@@ -11,11 +11,13 @@ public class MessageHandler : MonoBehaviour
 
     private void Awake()
     {
+        anim.gameObject.SetActive(false);
         main = this;
     }
 
     public void ShowMessage()
     {
+        anim.gameObject.SetActive(true);
         if (anim.GetBool("ShowMessage") == true) return;
         StartCoroutine(ShowAndHideMessage());
     }

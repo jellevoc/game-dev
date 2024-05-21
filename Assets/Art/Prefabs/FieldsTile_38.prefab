@@ -99,7 +99,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sr: {fileID: 4109611740494382481}
-  hoverColor: {r: 1, g: 1, b: 1, a: 0.6745098}
+  hoverColor: {r: 1, g: 1, b: 1, a: 0.70980394}
+  occupiedPlotHoverColor: {r: 1, g: 0, b: 0, a: 0.7058824}
   towerObj: {fileID: 0}
   turret: {fileID: 0}
 --- !u!61 &3022910443276028929

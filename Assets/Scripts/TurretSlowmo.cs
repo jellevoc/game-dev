@@ -84,7 +84,11 @@ public class TurretSlowmo : TowerBase
 
     public void Upgrade()
     {
-        if (CalculateUpgradeCost() > LevelManager.main.currency) return;
+        if (CalculateUpgradeCost() > LevelManager.main.currency)
+        {
+            MessageHandler.main.ShowMessage();
+            return;
+        }
 
         LevelManager.main.SpendCurrency(CalculateUpgradeCost());
 
