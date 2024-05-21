@@ -10,7 +10,16 @@ public class Menu : MonoBehaviour
     [SerializeField] TextMeshProUGUI currencyUI;
     [SerializeField] Animator anim;
 
+    public static Menu main;
+
+    private bool isHoveringMenu;
+
     private bool isMenuOpen = true;
+
+    private void Awake()
+    {
+        main = this;
+    }
 
     public void ToggleMenu()
     {
@@ -20,12 +29,22 @@ public class Menu : MonoBehaviour
 
     private void OnGUI()
     {
-        currencyUI.text = LevelManager.main.currency.ToString();
+        currencyUI.text = "$ " + LevelManager.main.currency.ToString();
     }
 
     public void SetSelected()
     {
 
+    }
+
+    public void SetHoveringState(bool _state)
+    {
+        isHoveringMenu = _state;
+    }
+
+    public bool IsHoveringMenu()
+    {
+        return isHoveringMenu;
     }
 
 }

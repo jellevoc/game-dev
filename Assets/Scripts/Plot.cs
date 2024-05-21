@@ -31,8 +31,8 @@ public class Plot : MonoBehaviour
 
     private void OnMouseDown()
     {
-        // If menu is open, return and don't make it posible for user to place towers.
-        if (MenuManager.main.IsHoveringMenu()) return;
+        // If upgrade or shop menu is open, return and don't make it posible for user to place towers.
+        if (MenuManager.main.IsHoveringMenu() || Menu.main.IsHoveringMenu()) return;
 
 
         // If there is a turret, open the upgrade menu

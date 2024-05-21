@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Currency : MonoBehaviour
+public class WaveUI : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] TextMeshProUGUI currencyUI;
+    [SerializeField] TextMeshProUGUI waveUI;
 
     private void OnGUI()
     {
-        currencyUI.text = "$ " + LevelManager.main.currency.ToString();
+        waveUI.text = "Wave: " + EnemySpawner.main.currentWave;
     }
 }
