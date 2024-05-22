@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -69,11 +70,11 @@ public class Plot : MonoBehaviour
 
         towerObj = Instantiate(towerToBuild.prefab, position, Quaternion.identity);
         turret = towerObj.GetComponent<Turret>();
-        if (turret == null)
-        {
-            Debug.Log("here");
-            turret = towerObj.GetComponent<TurretSlowmo>();
-        }
+        // if (turret == null)
+        // {
+        //     Debug.Log("here");
+        //     turret = towerObj.GetComponent<TurretSlowmo>();
+        // }
     }
 
 }

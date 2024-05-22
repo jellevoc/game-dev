@@ -13,6 +13,7 @@ public class Turret : TowerBase
     [SerializeField] protected GameObject turretMenu;
     [SerializeField] protected Button upgradeButton;
     [SerializeField] protected Button sellButton;
+    [SerializeField] protected GameObject crossbow;
 
     [Header("Attributes")]
     [SerializeField] protected float targetingRange = 2.5f;
@@ -27,7 +28,7 @@ public class Turret : TowerBase
     protected Transform target;
     protected float timeUntilFire;
 
-    protected int level = 1;
+    public static int level = 1;
 
     protected virtual void Start()
     {
@@ -149,18 +150,34 @@ public class Turret : TowerBase
             return;
         }
 
+
         LevelManager.main.SpendCurrency(CalculateUpgradeCost());
 
         level++;
+
+        TowerUpgrades towerToUpgradeTo = BuildManager.main.GetSelectedTower().upgrades[level - 2];
+        // Quaternion rotation = gameObject.transform.rotation;
+
+        // Destroy(gameObject);
+
+        // GameObject newTower = Instantiate(towerToUpgradeTo.prefab, plot.transform.position, rotation);
+
+        // CloseTurretMenu();
+
+        gameObject.GetComponent<SpriteRenderer>().sprite = towerToUpgradeTo.prefab.GetComponent<SpriteRenderer>().sprite;
+        bulletPrefab = towerToUpgradeTo.prefab.GetComponent<Turret>().bulletPrefab;
+        crossbow.GetComponent<SpriteRenderer>().sprite = towerToUpgradeTo.prefab.GetComponent<Turret>().crossbow.GetComponent<SpriteRenderer>().sprite;
+        crossbow.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 0.3f, gameObject.transform.position.z);
+
 
         bps = CalculateBPS();
         targetingRange = CalculateRange();
         // rotationSpeed = CalculateRotation();
 
         CloseTurretMenu();
-        Debug.Log("New BPS: " + bps);
-        Debug.Log("New Range: " + targetingRange);
-        Debug.Log("New Cost: " + CalculateUpgradeCost());
+        // Debug.Log("New BPS: " + bps);
+        // Debug.Log("New Range: " + targetingRange);
+        // Debug.Log("New Cost: " + CalculateUpgradeCost());
     }
 
     protected float CalculateBPS()

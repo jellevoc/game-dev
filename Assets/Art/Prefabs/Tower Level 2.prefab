@@ -275,6 +275,7 @@ MonoBehaviour:
   turretMenu: {fileID: 9090397734375762487}
   upgradeButton: {fileID: 5402854533756550108}
   sellButton: {fileID: 2269483701384338030}
+  crossbow: {fileID: 6473212952496356456}
   targetingRange: 2.5
   rotationSpeed: 200
   bps: 1

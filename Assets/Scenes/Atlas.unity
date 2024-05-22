@@ -8756,12 +8756,17 @@ MonoBehaviour:
   - name: Basic Turret
     cost: 100
     prefab: {fileID: 7446238796516381634, guid: 0313f601b4e3d4d3fa3ab54b03d05ebf, type: 3}
+    upgrades: []
   - name: Slowmo Turret
     cost: 200
     prefab: {fileID: 3812081499413575897, guid: bc66e24adba5547ffb8bd706d3ca454f, type: 3}
+    upgrades: []
   - name: Turret Better
     cost: 200
     prefab: {fileID: 4741279919390935768, guid: 38f50563a50ed457cadb89f63d0e538b, type: 3}
+    upgrades:
+    - prefab: {fileID: 2370098131302164850, guid: a08d88385f0af4d7585737b871f023f3, type: 3}
+    - prefab: {fileID: 5231777977901222092, guid: 8f55f677eba044d96930d64b90bb60b4, type: 3}
 --- !u!114 &1382523817
 MonoBehaviour:
   m_ObjectHideFlags: 0
