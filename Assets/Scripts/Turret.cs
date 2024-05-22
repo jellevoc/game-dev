@@ -51,7 +51,15 @@ public class Turret : TowerBase
             return;
         }
 
-        RotateTowardsTarget();
+        // Because rotating isn't instant, double check if target is in range.
+        if (CheckTargetIsInRange())
+        {
+            RotateTowardsTarget();
+        }
+        else
+        {
+            target = null;
+        }
 
         if (CheckTargetIsInRange())
         {
@@ -71,7 +79,22 @@ public class Turret : TowerBase
 
     protected void Shoot()
     {
-        GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, Quaternion.identity);
+
+        // Calculate direction from firing point to target
+        Vector3 direction = (target.position - firingPoint.position).normalized;
+
+        // Calculate the angle in degrees needed to rotate on the Z-axis
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        // Since the bullet's initial orientation is upwards, add 90 degrees to the angle
+        angle -= 90;
+
+        // Create a rotation around the Z-axis
+        Quaternion rotation = Quaternion.Euler(0, 0, angle);
+
+        // Instantiate the bullet with the calculated rotation
+        GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, rotation);
+
         Bullet bulletScript = bulletObj.GetComponent<Bullet>();
         bulletScript.SetTarget(target);
     }
@@ -88,6 +111,7 @@ public class Turret : TowerBase
 
     protected bool CheckTargetIsInRange()
     {
+        if (target == null) return false;
         return Vector2.Distance(target.position, transform.position) <= targetingRange;
     }
 

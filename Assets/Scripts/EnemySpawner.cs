@@ -93,9 +93,7 @@ public class EnemySpawner : MonoBehaviour
     {
         SetSelectedEnemy(Random.Range(0, enemies.Length));
         Enemy enemyToSpawn = GetSelectedEnemy();
-        Vector3 startPointPosition = LevelManager.main.startPoint.position;
-        startPointPosition.y -= 0.4f;
-        Instantiate(enemyToSpawn.prefab, startPointPosition, Quaternion.identity);
+        Instantiate(enemyToSpawn.prefab, LevelManager.main.startPoint.position, Quaternion.identity);
         // Instantiate(prefabToSpawn, LevelManager.main.startPoint.position, Quaternion.identity);
     }
 
