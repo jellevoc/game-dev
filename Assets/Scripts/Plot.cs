@@ -22,6 +22,7 @@ public class Plot : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        if (PauseMenu.isPaused) return;
         if (gameObject.tag == "EnemyTile")
         {
             sr.color = occupiedPlotHoverColor;
@@ -37,8 +38,9 @@ public class Plot : MonoBehaviour
 
     private void OnMouseDown()
     {
-        // If upgrade or shop menu is open, return and don't make it posible for user to place towers.
-        if (MenuManager.main.IsHoveringMenu() || Menu.main.IsHoveringMenu()) return;
+        // If either of these is true, don't make it posible for user to place turrets.
+        if (MenuManager.main.IsHoveringMenu() || Menu.main.IsHoveringMenu()
+        || PauseMenu.isPaused || gameObject.tag == "EnemyTile") return;
 
 
         // If there is a turret, open the upgrade menu
