@@ -945,6 +945,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 143387637}
+  messageText: {fileID: 0}
 --- !u!95 &143387637
 Animator:
   serializedVersion: 5
