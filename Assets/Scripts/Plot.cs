@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -61,20 +62,19 @@ public class Plot : MonoBehaviour
 
         LevelManager.main.SpendCurrency(towerToBuild.cost);
 
-        // TODO: Fix sprites
-        // Manually update new position because I messed up the sprites.
+
+        // Fix torret position on plot
         Vector3 position = transform.position;
-        // position.y += 0.25f;
-        // position.x -= 0.06f;
+        position.y += 0.5f;
 
 
-        towerObj = Instantiate(towerToBuild.prefab, transform.position, Quaternion.identity);
+        towerObj = Instantiate(towerToBuild.prefab, position, Quaternion.identity);
         turret = towerObj.GetComponent<Turret>();
-        if (turret == null)
-        {
-            Debug.Log("here");
-            turret = towerObj.GetComponent<TurretSlowmo>();
-        }
+        // if (turret == null)
+        // {
+        //     Debug.Log("here");
+        //     turret = towerObj.GetComponent<TurretSlowmo>();
+        // }
     }
 
 }

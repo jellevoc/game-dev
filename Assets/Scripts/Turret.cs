@@ -6,13 +6,15 @@ using UnityEngine.UI;
 public class Turret : TowerBase
 {
     [Header("References")]
-    [SerializeField] public Transform turretRotationPoint;
+    [SerializeField] protected Transform turretRotationPoint;
     [SerializeField] protected LayerMask enemyMask;
     [SerializeField] protected GameObject bulletPrefab;
     [SerializeField] protected Transform firingPoint;
     [SerializeField] protected GameObject turretMenu;
     [SerializeField] protected Button upgradeButton;
     [SerializeField] protected Button sellButton;
+    [SerializeField] protected GameObject crossbow;
+    [SerializeField] protected GameObject maxLevelUI;
 
     [Header("Attributes")]
     [SerializeField] protected float targetingRange = 2.5f;
@@ -51,7 +53,15 @@ public class Turret : TowerBase
             return;
         }
 
-        RotateTowardsTarget();
+        // Because rotating isn't instant, double check if target is in range.
+        if (CheckTargetIsInRange())
+        {
+            RotateTowardsTarget();
+        }
+        else
+        {
+            target = null;
+        }
 
         if (CheckTargetIsInRange())
         {
@@ -71,7 +81,22 @@ public class Turret : TowerBase
 
     protected void Shoot()
     {
-        GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, Quaternion.identity);
+
+        // Calculate direction from firing point to target
+        Vector3 direction = (target.position - firingPoint.position).normalized;
+
+        // Calculate the angle in degrees needed to rotate on the Z-axis
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        // Since the bullet's initial orientation is upwards, add 90 degrees to the angle
+        angle -= 90;
+
+        // Create a rotation around the Z-axis
+        Quaternion rotation = Quaternion.Euler(0, 0, angle);
+
+        // Instantiate the bullet with the calculated rotation
+        GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, rotation);
+
         Bullet bulletScript = bulletObj.GetComponent<Bullet>();
         bulletScript.SetTarget(target);
     }
@@ -88,6 +113,7 @@ public class Turret : TowerBase
 
     protected bool CheckTargetIsInRange()
     {
+        if (target == null) return false;
         return Vector2.Distance(target.position, transform.position) <= targetingRange;
     }
 
@@ -119,6 +145,12 @@ public class Turret : TowerBase
 
     public void Upgrade()
     {
+        if (level == 3)
+        {
+            StartCoroutine(ShowAndHideMessage());
+            return;
+        }
+
         if (CalculateUpgradeCost() > LevelManager.main.currency)
         {
             MessageHandler.main.ShowMessage();
@@ -129,14 +161,35 @@ public class Turret : TowerBase
 
         level++;
 
+        // Set current tower components to the new prefab
+        TowerUpgrades towerToUpgradeTo = BuildManager.main.GetSelectedTower().upgrades[level - 2];
+
+        gameObject.GetComponent<SpriteRenderer>().sprite = towerToUpgradeTo.prefab.GetComponent<SpriteRenderer>().sprite;
+        bulletPrefab = towerToUpgradeTo.prefab.GetComponent<Turret>().bulletPrefab;
+        crossbow.GetComponent<SpriteRenderer>().sprite = towerToUpgradeTo.prefab.GetComponent<Turret>().crossbow.GetComponent<SpriteRenderer>().sprite;
+
+
+
         bps = CalculateBPS();
         targetingRange = CalculateRange();
         // rotationSpeed = CalculateRotation();
 
         CloseTurretMenu();
-        Debug.Log("New BPS: " + bps);
-        Debug.Log("New Range: " + targetingRange);
-        Debug.Log("New Cost: " + CalculateUpgradeCost());
+
+        if (level == 3)
+        {
+            upgradeButton.image.color = Color.gray;
+        }
+        // Debug.Log("New BPS: " + bps);
+        // Debug.Log("New Range: " + targetingRange);
+        // Debug.Log("New Cost: " + CalculateUpgradeCost());
+    }
+
+    private IEnumerator ShowAndHideMessage()
+    {
+        maxLevelUI.SetActive(true);
+        yield return new WaitForSeconds(1);
+        maxLevelUI.SetActive(false);
     }
 
     protected float CalculateBPS()

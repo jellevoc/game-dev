@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEditor.VersionControl;
 
 public class MessageHandler : MonoBehaviour
 {
@@ -8,6 +10,7 @@ public class MessageHandler : MonoBehaviour
     [SerializeField] private Animator anim;
 
     public static MessageHandler main;
+
 
     private void Awake()
     {
