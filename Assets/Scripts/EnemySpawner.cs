@@ -93,6 +93,8 @@ public class EnemySpawner : MonoBehaviour
     {
         SetSelectedEnemy(Random.Range(0, enemies.Length));
         Enemy enemyToSpawn = GetSelectedEnemy();
+        enemyToSpawn.prefab.GetComponent<EnemyMovement>().moveSpeed *= (1 + 0.02f * currentWave);
+        enemyToSpawn.prefab.GetComponent<Health>().health *= Mathf.RoundToInt((1 + 0.05f * currentWave));
         Instantiate(enemyToSpawn.prefab, LevelManager.main.startPoint.position, Quaternion.identity);
         // Instantiate(prefabToSpawn, LevelManager.main.startPoint.position, Quaternion.identity);
     }
