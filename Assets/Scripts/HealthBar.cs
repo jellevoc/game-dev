@@ -33,11 +33,15 @@ public class HealthBar : MonoBehaviour
         if (healthBarSlider.value > 0)
         {
             healthBarSlider.value -= damage;
+            if (healthBarSlider.value <= 0)
+            {
+                GameOverHandler.onGameOver.Invoke();
+            }
             return true;
         }
         else
         {
-            Debug.Log("Dead");
+            GameOverHandler.onGameOver.Invoke();
             return false;
         }
     }
