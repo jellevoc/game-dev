@@ -2447,7 +2447,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &312135594
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2463,10 +2463,10 @@ RectTransform:
   - {fileID: 2013523689}
   m_Father: {fileID: 701677337}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -45}
+  m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &312135595
 MonoBehaviour:
@@ -4691,7 +4691,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &652069855
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4707,10 +4707,10 @@ RectTransform:
   - {fileID: 2038468575}
   m_Father: {fileID: 701677337}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 150, y: -45}
+  m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &652069856
 MonoBehaviour:
@@ -9612,7 +9612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e22efbc64d9c441d6b0e0a7bdf1f0a72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseIncome: 500
+  baseIncome: 200
   startPoint: {fileID: 1998331078}
   path:
   - {fileID: 261116346}
@@ -9659,15 +9659,23 @@ MonoBehaviour:
   - name: Zombie
     damage: 5
     prefab: {fileID: 2902183507586344081, guid: 18ea6eaa4cff64df7913dc5200573164, type: 3}
+    moveSpeed: 0
+    health: 0
   - name: Zombie
     damage: 5
     prefab: {fileID: 2902183507586344081, guid: 18ea6eaa4cff64df7913dc5200573164, type: 3}
+    moveSpeed: 0
+    health: 0
   - name: FastEnemy
     damage: 10
     prefab: {fileID: 1928805048681885118, guid: 281b4a15932fe420a99e0eeba2b4230d, type: 3}
+    moveSpeed: 0
+    health: 0
   - name: Tank
     damage: 20
     prefab: {fileID: 8652611343266337074, guid: f326011f7a0804d6784f3c5b28dcedd5, type: 3}
+    moveSpeed: 0
+    health: 0
   baseEnemies: 8
   enemiesPerSecond: 0.5
   timeBetweenWaves: 5
@@ -13463,7 +13471,7 @@ GameObject:
   - component: {fileID: 1895030995}
   - component: {fileID: 1895030994}
   m_Layer: 5
-  m_Name: Butter Turret
+  m_Name: Better Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
