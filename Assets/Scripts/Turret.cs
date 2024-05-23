@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Turret : TowerBase
 {
     [Header("References")]
-    [SerializeField] public Transform turretRotationPoint;
+    [SerializeField] protected Transform turretRotationPoint;
     [SerializeField] protected LayerMask enemyMask;
     [SerializeField] protected GameObject bulletPrefab;
     [SerializeField] protected Transform firingPoint;
@@ -14,6 +14,7 @@ public class Turret : TowerBase
     [SerializeField] protected Button upgradeButton;
     [SerializeField] protected Button sellButton;
     [SerializeField] protected GameObject crossbow;
+    [SerializeField] protected GameObject maxLevelUI;
 
     [Header("Attributes")]
     [SerializeField] protected float targetingRange = 2.5f;
@@ -28,7 +29,7 @@ public class Turret : TowerBase
     protected Transform target;
     protected float timeUntilFire;
 
-    public static int level = 1;
+    protected int level = 1;
 
     protected virtual void Start()
     {
@@ -144,25 +145,24 @@ public class Turret : TowerBase
 
     public void Upgrade()
     {
+        if (level == 3)
+        {
+            StartCoroutine(ShowAndHideMessage());
+            return;
+        }
+
         if (CalculateUpgradeCost() > LevelManager.main.currency)
         {
             MessageHandler.main.ShowMessage();
             return;
         }
 
-
         LevelManager.main.SpendCurrency(CalculateUpgradeCost());
 
         level++;
 
+        // Set current tower components to the new prefab
         TowerUpgrades towerToUpgradeTo = BuildManager.main.GetSelectedTower().upgrades[level - 2];
-        // Quaternion rotation = gameObject.transform.rotation;
-
-        // Destroy(gameObject);
-
-        // GameObject newTower = Instantiate(towerToUpgradeTo.prefab, plot.transform.position, rotation);
-
-        // CloseTurretMenu();
 
         gameObject.GetComponent<SpriteRenderer>().sprite = towerToUpgradeTo.prefab.GetComponent<SpriteRenderer>().sprite;
         bulletPrefab = towerToUpgradeTo.prefab.GetComponent<Turret>().bulletPrefab;
@@ -175,9 +175,21 @@ public class Turret : TowerBase
         // rotationSpeed = CalculateRotation();
 
         CloseTurretMenu();
+
+        if (level == 3)
+        {
+            upgradeButton.image.color = Color.gray;
+        }
         // Debug.Log("New BPS: " + bps);
         // Debug.Log("New Range: " + targetingRange);
         // Debug.Log("New Cost: " + CalculateUpgradeCost());
+    }
+
+    private IEnumerator ShowAndHideMessage()
+    {
+        maxLevelUI.SetActive(true);
+        yield return new WaitForSeconds(1);
+        maxLevelUI.SetActive(false);
     }
 
     protected float CalculateBPS()

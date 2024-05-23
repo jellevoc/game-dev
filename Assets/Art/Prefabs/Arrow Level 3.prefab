@@ -127,8 +127,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 7955990795618297258}
-  bulletSpeed: 5
-  bulletDamage: 1
+  bulletSpeed: 9
+  bulletDamage: 3
 --- !u!60 &7463449986093086088
 PolygonCollider2D:
   m_ObjectHideFlags: 0
