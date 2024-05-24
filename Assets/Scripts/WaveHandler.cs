@@ -6,8 +6,6 @@ public class WaveHandler : MonoBehaviour
 {
     [Header("Attributes")]
     [SerializeField] private float timeBetweenWaves = 5f;
-    [SerializeField] private int cashAfterRound = 100;
-    [SerializeField] private float cashAfterRoundMultiplier = 0.5f;
     [SerializeField] private int maxWaves = 25;
 
     public int currentWave = 1;
@@ -36,7 +34,8 @@ public class WaveHandler : MonoBehaviour
             return;
         }
 
-        LevelManager.main.IncreaseCurrency(Mathf.RoundToInt(cashAfterRound * cashAfterRoundMultiplier * currentWave));
+        Atlas.onWaveEnd.Invoke();
+        // LevelManager.main.IncreaseCurrency(Mathf.RoundToInt(cashAfterRound * cashAfterRoundMultiplier * currentWave));
 
         StartCoroutine(StartWave());
     }

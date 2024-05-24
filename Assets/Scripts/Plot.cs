@@ -46,7 +46,11 @@ public class Plot : MonoBehaviour
         // If there is a turret, open the upgrade menu
         if (towerObj != null)
         {
-            turret.OpenTurretMenu();
+            if (turret != null)
+            {
+                turret.OpenTurretMenu();
+                return;
+            }
             return;
         }
 

@@ -12,6 +12,7 @@ public class Bullet : MonoBehaviour
     [Header("Attributes")]
     [SerializeField] private float bulletSpeed = 5f;
     [SerializeField] private int bulletDamage = 1;
+    [SerializeField] private float waitDelayBeforeDestroying = 0.2f;
 
     private Transform target;
 
@@ -34,7 +35,7 @@ public class Bullet : MonoBehaviour
         rb.velocity = direction * bulletSpeed;
     }
 
-    // If the bullet collides with the enemy, Call the TakeDamage function in the health script and destroy the bullet.
+    // If the bullet collides with the enemy, wait for slight delay else the arrow wouldn't visible if enemy is close to the turret.
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (hasCollided) return;
@@ -45,7 +46,7 @@ public class Bullet : MonoBehaviour
 
     private IEnumerator DestroyAfterDelay(Collision2D _other)
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(waitDelayBeforeDestroying);
 
         _other.gameObject.GetComponent<Health>().TakeDamage(bulletDamage);
 
