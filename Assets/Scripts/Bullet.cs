@@ -15,6 +15,8 @@ public class Bullet : MonoBehaviour
 
     private Transform target;
 
+    private bool hasCollided = false;
+
     // Public function so it can be called in different scripts.
     public void SetTarget(Transform _target)
     {
@@ -35,6 +37,8 @@ public class Bullet : MonoBehaviour
     // If the bullet collides with the enemy, Call the TakeDamage function in the health script and destroy the bullet.
     private void OnCollisionEnter2D(Collision2D other)
     {
+        if (hasCollided) return;
+        hasCollided = true;
         other.gameObject.GetComponent<Health>().TakeDamage(bulletDamage);
         Destroy(gameObject);
     }
