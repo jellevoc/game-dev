@@ -8,6 +8,7 @@ public class WaveHandler : MonoBehaviour
     [SerializeField] private float timeBetweenWaves = 5f;
     [SerializeField] private int cashAfterRound = 100;
     [SerializeField] private float cashAfterRoundMultiplier = 0.5f;
+    [SerializeField] private int maxRounds = 25;
 
     public int currentWave = 1;
 
@@ -22,18 +23,26 @@ public class WaveHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBetweenWaves);
         EnemySpawner.onWaveStart.Invoke();
-        // isSpawning = true;
-        // enemiesLeftToSpawn = EnemiesPerWave();
-        // eps = EnemiesPerSecond();
     }
 
     public void EndWave()
     {
-        // isSpawning = false;
-        // timeSinceLastSpawn = 0f;
         EnemySpawner.onWaveEnd.Invoke();
+
         currentWave++;
+        if (currentWave == maxRounds)
+        {
+            EndGame();
+            return;
+        }
+
         LevelManager.main.IncreaseCurrency(Mathf.RoundToInt(cashAfterRound * cashAfterRoundMultiplier * currentWave));
+
         StartCoroutine(StartWave());
+    }
+
+    public void EndGame()
+    {
+
     }
 }
