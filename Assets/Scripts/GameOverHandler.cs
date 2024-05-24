@@ -11,6 +11,7 @@ public class GameOverHandler : MonoBehaviour
     [SerializeField] private GameObject gameOverMenu;
     [SerializeField] TextMeshProUGUI waveText;
 
+    public bool isGameOver = false;
 
     public static GameOverHandler main;
 
@@ -26,6 +27,7 @@ public class GameOverHandler : MonoBehaviour
     private void GameOver()
     {
         gameOverMenu.SetActive(true);
+        isGameOver = true;
         waveText.text = WaveHandler.main.currentWave.ToString();
         Time.timeScale = 0f;
     }

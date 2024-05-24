@@ -36,13 +36,6 @@ public class Turret : TowerBase
 
     protected int level = 1;
 
-    public static Turret main;
-
-    private void Awake()
-    {
-        main = this;
-    }
-
     protected virtual void Start()
     {
         bpsBase = bps;
@@ -154,13 +147,26 @@ public class Turret : TowerBase
     public override void OpenTurretMenu()
     {
         turretMenu.SetActive(true);
+        SetUpgradeText();
+        SetSellText();
+        DrawRange();
         // DrawRange();
-        upgradeText.text = "Upgrade: " + CalculateUpgradeCost().ToString();
     }
 
     public void CloseTurretMenu()
     {
         MenuManager.main.SetHoveringState(false);
+    }
+
+    private void SetUpgradeText()
+    {
+        upgradeText.text = "Upgrade: " + CalculateUpgradeCost().ToString();
+    }
+
+    private void SetSellText()
+    {
+        int SellProfit = CalculateSellCost(BuildManager.main.GetSelectedTower(), level, baseUpgradeCost);
+        sellText.text = "Sell: " + SellProfit.ToString();
     }
 
     private void DrawRange()
@@ -204,6 +210,9 @@ public class Turret : TowerBase
         LevelManager.main.SpendCurrency(CalculateUpgradeCost());
 
         level++;
+
+        SetUpgradeText();
+        SetSellText();
 
         // Set current tower components to the new prefab
         TowerUpgrades towerToUpgradeTo = BuildManager.main.GetSelectedTower().upgrades[level - 2];

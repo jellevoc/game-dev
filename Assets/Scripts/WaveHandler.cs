@@ -8,7 +8,7 @@ public class WaveHandler : MonoBehaviour
     [SerializeField] private float timeBetweenWaves = 5f;
     [SerializeField] private int cashAfterRound = 100;
     [SerializeField] private float cashAfterRoundMultiplier = 0.5f;
-    [SerializeField] private int maxRounds = 25;
+    [SerializeField] private int maxWaves = 25;
 
     public int currentWave = 1;
 
@@ -30,19 +30,14 @@ public class WaveHandler : MonoBehaviour
         EnemySpawner.onWaveEnd.Invoke();
 
         currentWave++;
-        if (currentWave == maxRounds)
+        if (currentWave == maxWaves)
         {
-            EndGame();
+            VictoryHandler.onGameWon.Invoke();
             return;
         }
 
         LevelManager.main.IncreaseCurrency(Mathf.RoundToInt(cashAfterRound * cashAfterRoundMultiplier * currentWave));
 
         StartCoroutine(StartWave());
-    }
-
-    public void EndGame()
-    {
-
     }
 }
