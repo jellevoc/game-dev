@@ -39,7 +39,16 @@ public class Bullet : MonoBehaviour
     {
         if (hasCollided) return;
         hasCollided = true;
-        other.gameObject.GetComponent<Health>().TakeDamage(bulletDamage);
+
+        StartCoroutine(DestroyAfterDelay(other));
+    }
+
+    private IEnumerator DestroyAfterDelay(Collision2D _other)
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        _other.gameObject.GetComponent<Health>().TakeDamage(bulletDamage);
+
         Destroy(gameObject);
     }
 }
