@@ -9612,7 +9612,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e22efbc64d9c441d6b0e0a7bdf1f0a72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseIncome: 200
+  baseIncome: 500
   startPoint: {fileID: 1998331078}
   path:
   - {fileID: 261116346}
@@ -9681,6 +9681,10 @@ MonoBehaviour:
   timeBetweenWaves: 5
   difficultyScalingFactor: 0.75
   enemiesPerSecondCap: 15
+  cashAfterRound: 100
+  cashAfterRoundMultiplier: 0.5
+  enemySpeedMultiplier: 0.07
+  enemyHealthMultiplier: 0.1
   currentWave: 1
 --- !u!114 &1382523816
 MonoBehaviour:

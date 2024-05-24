@@ -11,6 +11,13 @@ public class Health : MonoBehaviour
 
     private bool isDestroyed = false;
 
+    public int baseHealth;
+
+    private void Start()
+    {
+        baseHealth = health;
+    }
+
     public void TakeDamage(int damage)
     {
         health -= damage;
