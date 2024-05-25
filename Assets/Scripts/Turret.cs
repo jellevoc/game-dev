@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +17,9 @@ public class Turret : TowerBase
     [SerializeField] protected Button sellButton;
     [SerializeField] protected GameObject crossbow;
     [SerializeField] protected GameObject maxLevelUI;
+    [SerializeField] protected TextMeshProUGUI upgradeText;
+    [SerializeField] protected TextMeshProUGUI sellText;
+    [SerializeField] protected LineRenderer lineRenderer;
 
     [Header("Attributes")]
     [SerializeField] protected float targetingRange = 2.5f;
@@ -41,12 +46,19 @@ public class Turret : TowerBase
         sellButton.onClick.AddListener(() => Sell(BuildManager.main.GetSelectedTower(), level, baseUpgradeCost));
 
         turretMenu.SetActive(false);
+
+        lineRenderer.useWorldSpace = false;
     }
 
 
 
     protected virtual void Update()
     {
+        if (MenuManager.main.IsHoveringMenu())
+        {
+
+        }
+
         if (target == null)
         {
             FindTarget();
@@ -135,12 +147,50 @@ public class Turret : TowerBase
     public override void OpenTurretMenu()
     {
         turretMenu.SetActive(true);
+        SetUpgradeText();
+        SetSellText();
+        DrawRange();
+        // DrawRange();
     }
 
     public void CloseTurretMenu()
     {
-        turretMenu.SetActive(false);
         MenuManager.main.SetHoveringState(false);
+    }
+
+    private void SetUpgradeText()
+    {
+        upgradeText.text = "Upgrade: " + CalculateUpgradeCost().ToString();
+    }
+
+    private void SetSellText()
+    {
+        int SellProfit = CalculateSellCost(BuildManager.main.GetSelectedTower(), level, baseUpgradeCost);
+        sellText.text = "Sell: " + SellProfit.ToString();
+    }
+
+    private void DrawRange()
+    {
+        int size = 100;
+        lineRenderer.positionCount = size;
+
+        for (int currentStep = 0; currentStep < size; currentStep++)
+        {
+            float circumferenceProgress = (float)currentStep / (size - 1);
+
+            float currentRadian = circumferenceProgress * 2 * Mathf.PI;
+
+            float xScaled = Mathf.Cos(currentRadian);
+            float yScaled = Mathf.Sin(currentRadian);
+
+            float x = targetingRange * 1.7f * xScaled;
+            float y = targetingRange * 1.7f * yScaled;
+            float z = 0;
+
+            Vector3 currentPosition = new Vector3(x, y, z);
+
+            lineRenderer.SetPosition(currentStep, currentPosition);
+        }
     }
 
     public void Upgrade()
@@ -160,6 +210,9 @@ public class Turret : TowerBase
         LevelManager.main.SpendCurrency(CalculateUpgradeCost());
 
         level++;
+
+        SetUpgradeText();
+        SetSellText();
 
         // Set current tower components to the new prefab
         TowerUpgrades towerToUpgradeTo = BuildManager.main.GetSelectedTower().upgrades[level - 2];

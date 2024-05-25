@@ -23,7 +23,7 @@ public class Plot : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (PauseMenu.isPaused) return;
+        if (PauseMenu.isPaused || GameOverHandler.main.isGameOver) return;
         if (gameObject.tag == "EnemyTile")
         {
             sr.color = occupiedPlotHoverColor;
@@ -40,14 +40,17 @@ public class Plot : MonoBehaviour
     private void OnMouseDown()
     {
         // If either of these is true, don't make it posible for user to place turrets.
-        if (MenuManager.main.IsHoveringMenu() || Menu.main.IsHoveringMenu()
-        || PauseMenu.isPaused || gameObject.tag == "EnemyTile") return;
+        if (CanHoverOrPlace()) return;
 
 
         // If there is a turret, open the upgrade menu
         if (towerObj != null)
         {
-            turret.OpenTurretMenu();
+            if (turret != null)
+            {
+                turret.OpenTurretMenu();
+                return;
+            }
             return;
         }
 
@@ -75,6 +78,12 @@ public class Plot : MonoBehaviour
         //     Debug.Log("here");
         //     turret = towerObj.GetComponent<TurretSlowmo>();
         // }
+    }
+
+    private bool CanHoverOrPlace()
+    {
+        return !!(MenuManager.main.IsHoveringMenu() || Menu.main.IsHoveringMenu()
+        || PauseMenu.isPaused || gameObject.tag == "EnemyTile" || GameOverHandler.main.isGameOver);
     }
 
 }

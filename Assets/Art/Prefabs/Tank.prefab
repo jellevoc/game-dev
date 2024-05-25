@@ -129,7 +129,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1304453002298081452}
-  moveSpeed: 0.7
+  moveSpeed: 0.816
+  baseSpeed: 0.8
 --- !u!114 &4455014206831553255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,8 +143,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01e6bcb5aff1d4650aa4135bee2d06fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 5
+  health: 3
   currencyWorth: 30
+  baseHealth: 3
 --- !u!95 &2627748082095046500
 Animator:
   serializedVersion: 5

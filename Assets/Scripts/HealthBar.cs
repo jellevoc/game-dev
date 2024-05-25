@@ -24,7 +24,7 @@ public class HealthBar : MonoBehaviour
     private void Start()
     {
         healthBarSlider = healthBar.GetComponent<Slider>();
-        healthBarSlider.maxValue = maxHealth;
+        healthBarSlider.maxValue = 100;
         healthBarSlider.value = maxHealth;
     }
 
