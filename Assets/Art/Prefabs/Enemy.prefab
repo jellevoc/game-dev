@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -13.023227, y: 3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -129,7 +129,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 2172459344228534847}
-  moveSpeed: 1.2
+  moveSpeed: 1.2240001
+  baseSpeed: 1.2
 --- !u!114 &590374951782497369
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -143,7 +144,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 2
-  currencyWorth: 20
+  currencyWorth: 15
+  baseHealth: 2
 --- !u!95 &2326261720643057649
 Animator:
   serializedVersion: 5

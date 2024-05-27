@@ -10,6 +10,6 @@ public class WaveUI : MonoBehaviour
 
     private void OnGUI()
     {
-        waveUI.text = "Wave: " + EnemySpawner.main.currentWave;
+        waveUI.text = "Wave: " + WaveHandler.main.currentWave;
     }
 }

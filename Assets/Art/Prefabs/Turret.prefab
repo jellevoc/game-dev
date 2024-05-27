@@ -906,6 +906,11 @@ MonoBehaviour:
   turretMenu: {fileID: 2933014905627143106}
   upgradeButton: {fileID: 6761647765784760151}
   sellButton: {fileID: 730791243942268945}
+  crossbow: {fileID: 0}
+  maxLevelUI: {fileID: 0}
+  upgradeText: {fileID: 0}
+  sellText: {fileID: 0}
+  lineRenderer: {fileID: 0}
   targetingRange: 2
   rotationSpeed: 200
   bps: 1
