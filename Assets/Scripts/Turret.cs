@@ -111,10 +111,10 @@ public class Turret : TowerBase
 
         Bullet bulletScript = bulletObj.GetComponent<Bullet>();
         bulletScript.SetTarget(target);
-        PlaySFX();
+        ShootSFX();
     }
 
-    protected void PlaySFX()
+    protected void ShootSFX()
     {
         SFXHandler sfx = SFXHandler.main;
         sfx.src.clip = sfx.sfxCrossbowShoot;

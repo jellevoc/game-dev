@@ -8,6 +8,7 @@ public class SFXHandler : MonoBehaviour
     [SerializeField] public AudioSource src;
     [SerializeField] public AudioClip sfxCratePickup;
     [SerializeField] public AudioClip sfxCrossbowShoot;
+    [SerializeField] public AudioClip sfxTowerPlace;
 
     public static SFXHandler main;
 

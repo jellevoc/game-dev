@@ -10,10 +10,18 @@ public class TowerBase : MonoBehaviour
 
     public virtual void Sell(Tower _tower, int _level, int _baseUpgradeCost)
     {
+        PlaySFX();
         int sellCost = CalculateSellCost(_tower, _level, _baseUpgradeCost);
         LevelManager.main.IncreaseCurrency(sellCost);
         MenuManager.main.SetHoveringState(false);
         Destroy(gameObject);
+    }
+
+    protected void PlaySFX()
+    {
+        SFXHandler sfx = SFXHandler.main;
+        sfx.src.clip = sfx.sfxCratePickup;
+        sfx.src.Play();
     }
 
     public int CalculateSellCost(Tower _tower, int _level, int _baseUpgradeCost)

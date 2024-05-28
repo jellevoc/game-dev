@@ -4478,6 +4478,7 @@ MonoBehaviour:
   src: {fileID: 588275280}
   sfxCratePickup: {fileID: 8300000, guid: 2674f6957d3454e67b4c2cea8f611cbe, type: 3}
   sfxCrossbowShoot: {fileID: 8300000, guid: 6820d7305bd35459eaa6a9078f07fe02, type: 3}
+  sfxTowerPlace: {fileID: 8300000, guid: fb2429f6eb25a443db040b68ee762363, type: 3}
 --- !u!82 &588275280
 AudioSource:
   m_ObjectHideFlags: 0
@@ -4490,7 +4491,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.407
   m_Pitch: 1
   Loop: 0
   Mute: 0
