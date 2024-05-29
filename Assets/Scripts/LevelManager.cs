@@ -30,6 +30,7 @@ public class LevelManager : MonoBehaviour
         currency += amount;
     }
 
+    // Return bool so we can check if player has enough money to buy (true: player has enough money) | (false: player doesnt have enough money)
     public bool SpendCurrency(int amount)
     {
         if (amount <= currency)

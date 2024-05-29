@@ -28,15 +28,18 @@ public class WaveHandler : MonoBehaviour
         EnemySpawner.onWaveEnd.Invoke();
 
         currentWave++;
+        // If player reached max waves
         if (currentWave == maxWaves)
         {
+            // Call onGameWon event
             VictoryHandler.onGameWon.Invoke();
             return;
         }
 
+        // Call onWaveEnd event 
         Atlas.onWaveEnd.Invoke();
-        // LevelManager.main.IncreaseCurrency(Mathf.RoundToInt(cashAfterRound * cashAfterRoundMultiplier * currentWave));
 
+        // Wait ... (5) seconds before starting wave.
         StartCoroutine(StartWave());
     }
 }

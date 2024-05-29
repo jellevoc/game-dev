@@ -32,7 +32,7 @@ public class EnemySpawner : MonoBehaviour
     private int selectedEnemy = 0;
 
 
-    // If the onEnemyDestroy event is called, run the EnemyDestroyed function.
+    // Set listeners to events
     private void Awake()
     {
         main = this;
@@ -41,11 +41,12 @@ public class EnemySpawner : MonoBehaviour
         onWaveEnd.AddListener(WaveEnd);
     }
 
-    // Start the wave with a timer.
+    // Call the startwave function in WaveHandler with a slight timer/delay
     private void Start()
     {
         StartCoroutine(WaveHandler.main.StartWave());
     }
+
 
     private void Update()
     {
@@ -53,15 +54,16 @@ public class EnemySpawner : MonoBehaviour
 
         timeSinceLastSpawn += Time.deltaTime;
 
-        // If timeSinceLastSpawn >= 2 and there are enemies still left to spawn.
-        // Spawn enemy and update variables.
+        // If conditions are met to spawn enemies.
         if (timeSinceLastSpawn >= (1f / eps) && enemiesLeftToSpawn > 0)
         {
             SpawnEnemy();
+
             enemiesLeftToSpawn--;
             enemiesAlive++;
             timeSinceLastSpawn = 0f;
         }
+
 
         // If all enemies are destroyed and there aren't any left to spawn.
         if (enemiesAlive == 0 && enemiesLeftToSpawn == 0)
@@ -88,31 +90,18 @@ public class EnemySpawner : MonoBehaviour
         timeSinceLastSpawn = 0f;
     }
 
-    // // Wait for timeBetweenWaves (5 seconds), before starting new wave.
-    // private IEnumerator StartWave()
-    // {
-    //     yield return new WaitForSeconds(timeBetweenWaves);
-
-    // }
-
-    // Reset variables, add to current wave and start the StartWave timer.
-    // private void EndWave()
-    // {
-
-    //     currentWave++;
-    //     LevelManager.main.IncreaseCurrency(Mathf.RoundToInt(cashAfterRound * cashAfterRoundMultiplier * currentWave));
-    //     StartCoroutine(StartWave());
-    // }
-
-    // Spawn enemy
     private void SpawnEnemy()
     {
+        // Set random enemy from array
         SetSelectedEnemy(Random.Range(0, enemies.Length));
         Enemy enemyToSpawn = GetSelectedEnemy();
+
+        // Set the health and speed based on the wave. So the enemies will have more health and more speed at round 15 than round 2.
         enemyToSpawn.prefab.GetComponent<EnemyMovement>().moveSpeed = enemyToSpawn.prefab.GetComponent<EnemyMovement>().baseSpeed * (1 + enemySpeedMultiplier * WaveHandler.main.currentWave);
-        enemyToSpawn.prefab.GetComponent<Health>().health = enemyToSpawn.prefab.GetComponent<Health>().baseHealth * Mathf.RoundToInt((1 + enemyHealthMultiplier * WaveHandler.main.currentWave));
+        enemyToSpawn.prefab.GetComponent<Health>().health = enemyToSpawn.prefab.GetComponent<Health>().baseHealth * Mathf.RoundToInt(1 + enemyHealthMultiplier * WaveHandler.main.currentWave);
+
+        // Spawn enemy
         Instantiate(enemyToSpawn.prefab, LevelManager.main.startPoint.position, Quaternion.identity);
-        // Instantiate(prefabToSpawn, LevelManager.main.startPoint.position, Quaternion.identity);
     }
 
     private int EnemiesPerWave()

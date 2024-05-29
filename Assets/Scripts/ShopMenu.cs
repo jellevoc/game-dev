@@ -21,6 +21,7 @@ public class Menu : MonoBehaviour
         main = this;
     }
 
+    // Change bool so it shows animation.
     public void ToggleMenu()
     {
         isMenuOpen = !isMenuOpen;
@@ -30,11 +31,6 @@ public class Menu : MonoBehaviour
     private void OnGUI()
     {
         currencyUI.text = LevelManager.main.currency.ToString();
-    }
-
-    public void SetSelected()
-    {
-
     }
 
     public void SetHoveringState(bool _state)

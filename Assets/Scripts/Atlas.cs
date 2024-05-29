@@ -21,6 +21,7 @@ public class Atlas : MonoBehaviour
         onWaveEnd.AddListener(DropBitcoinCrate);
     }
 
+    // Gets called when the wave ends
     private void DropBitcoinCrate()
     {
         Vector2 randomPos = GetRandomPositionInCircle();
@@ -30,16 +31,18 @@ public class Atlas : MonoBehaviour
 
     Vector2 GetRandomPositionInCircle()
     {
-        // Genereer willekeurige coördinaten binnen het bereik van de cirkelstraal
-        float randomAngle = Random.Range(0f, Mathf.PI * 2); // Hoek tussen 0 en 2pi (360 graden)
-        float randomRadius = Mathf.Sqrt(Random.Range(0f, 1f)) * radius; // Willekeurige straal binnen de cirkel
+        // (0, 360)
+        float randomAngle = Random.Range(0f, Mathf.PI * 2);
+        // (0, 5)
+        float randomRadius = Mathf.Sqrt(Random.Range(0f, 1f)) * radius;
 
-        // Bereken de x- en y-coördinaten van de gegenereerde positie
+        // Calculate X and Y axis
         float xPos = Mathf.Cos(randomAngle) * randomRadius;
         float yPos = Mathf.Sin(randomAngle) * randomRadius;
 
-        // Pas de positie aan zodat deze binnen de cirkel is
-        Vector2 randomPosition = new Vector2(xPos, yPos) + (Vector2)gameObject.transform.position;
+        // Change pos to include offset
+        Vector2 offset = circleCollider.offset;
+        Vector2 randomPosition = new Vector2(xPos, yPos) + offset + (Vector2)gameObject.transform.position;
 
         return randomPosition;
     }
