@@ -24,6 +24,11 @@ public class Bullet : MonoBehaviour
         target = _target;
     }
 
+    private void Start()
+    {
+        StartCoroutine(DestroyIfNotCollided());
+    }
+
 
     // Follow the direction of the enemy.
     void FixedUpdate()
@@ -33,6 +38,13 @@ public class Bullet : MonoBehaviour
         Vector2 direction = (target.position - transform.position).normalized;
 
         rb.velocity = direction * bulletSpeed;
+
+    }
+
+    private IEnumerator DestroyIfNotCollided()
+    {
+        yield return new WaitForSeconds(7);
+        Destroy(gameObject);
     }
 
     // If the bullet collides with the enemy, wait for slight delay else the arrow wouldn't visible if enemy is close to the turret.

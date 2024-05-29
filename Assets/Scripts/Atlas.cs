@@ -38,8 +38,9 @@ public class Atlas : MonoBehaviour
         float xPos = Mathf.Cos(randomAngle) * randomRadius;
         float yPos = Mathf.Sin(randomAngle) * randomRadius;
 
-        // Pas de positie aan zodat deze binnen de cirkel is
-        Vector2 randomPosition = new Vector2(xPos, yPos) + (Vector2)gameObject.transform.position;
+        // Pas de positie aan zodat deze binnen de cirkel is, inclusief de offset
+        Vector2 offset = circleCollider.offset;
+        Vector2 randomPosition = new Vector2(xPos, yPos) + offset + (Vector2)gameObject.transform.position;
 
         return randomPosition;
     }
