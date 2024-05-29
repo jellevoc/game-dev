@@ -16,8 +16,16 @@ public class BitcoinCrate : MonoBehaviour
 
         if (isColliding)
         {
+            PlaySFX();
             LevelManager.main.IncreaseCurrency(Mathf.RoundToInt(cashAfterRound * cashAfterRoundMultiplier * WaveHandler.main.currentWave));
             Destroy(gameObject);
         }
+    }
+
+    void PlaySFX()
+    {
+        SFXHandler sfx = SFXHandler.main;
+        sfx.src.clip = sfx.sfxCratePickup;
+        sfx.src.Play();
     }
 }

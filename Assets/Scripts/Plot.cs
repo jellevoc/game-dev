@@ -73,11 +73,21 @@ public class Plot : MonoBehaviour
 
         towerObj = Instantiate(towerToBuild.prefab, position, Quaternion.identity);
         turret = towerObj.GetComponent<Turret>();
+        PlaySFX();
+
+
         // if (turret == null)
         // {
         //     Debug.Log("here");
         //     turret = towerObj.GetComponent<TurretSlowmo>();
         // }
+    }
+
+    protected void PlaySFX()
+    {
+        SFXHandler sfx = SFXHandler.main;
+        sfx.src.clip = sfx.sfxTowerPlace;
+        sfx.src.Play();
     }
 
     private bool CanHoverOrPlace()
