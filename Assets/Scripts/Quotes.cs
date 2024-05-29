@@ -28,6 +28,7 @@ public class Quotes
         };
     }
 
+    // Get random quote from either George Orwell or Atlas Shrugged quote array.
     public string GetRandomQuote()
     {
         int totalQuotes = GeorgeOrwellQuotes.Count + AtlasShruggedQuotes.Count;

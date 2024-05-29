@@ -38,10 +38,12 @@ public class Turret : TowerBase
 
     protected virtual void Start()
     {
+        // Set base variables
         bpsBase = bps;
         targetingRangeBase = targetingRange;
         rotationSpeedBase = rotationSpeed;
 
+        // Set events
         upgradeButton.onClick.AddListener(Upgrade);
         sellButton.onClick.AddListener(() => Sell(BuildManager.main.GetSelectedTower(), level, baseUpgradeCost));
 
@@ -54,31 +56,18 @@ public class Turret : TowerBase
 
     protected virtual void Update()
     {
-        if (MenuManager.main.IsHoveringMenu())
-        {
-
-        }
-
         if (target == null)
         {
             FindTarget();
-            return;
         }
 
-        // Because rotating isn't instant, double check if target is in range.
-        if (CheckTargetIsInRange())
+        // Double check if target is in range because turret rotation isn't instant.
+        if (target != null && CheckTargetIsInRange())
         {
             RotateTowardsTarget();
-        }
-        else
-        {
-            target = null;
-        }
 
-        if (CheckTargetIsInRange())
-        {
+            // If turret can shoot.
             timeUntilFire += Time.deltaTime;
-
             if (timeUntilFire >= 1f / bps)
             {
                 Shoot();
@@ -97,13 +86,13 @@ public class Turret : TowerBase
         // Calculate direction from firing point to target
         Vector3 direction = (target.position - firingPoint.position).normalized;
 
-        // Calculate the angle in degrees needed to rotate on the Z-axis
+        // Calculate angle in degrees for Z-axis
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-        // Since the bullet's initial orientation is upwards, add 90 degrees to the angle
+        // Add 90 degrees to angle because bullet is facing upwards.
         angle -= 90;
 
-        // Create a rotation around the Z-axis
+        // New rotation with angle we calculated
         Quaternion rotation = Quaternion.Euler(0, 0, angle);
 
         // Instantiate the bullet with the calculated rotation
@@ -123,14 +112,17 @@ public class Turret : TowerBase
 
     protected void FindTarget()
     {
+        // Make circle around the player with the targetingRange as radius and the enemymask as layer
         RaycastHit2D[] nearbyEnemies = Physics2D.CircleCastAll(transform.position, targetingRange, Vector2.zero, 0f, enemyMask);
 
+        // Set target to the first enemy
         if (nearbyEnemies.Length > 0)
         {
             target = nearbyEnemies[0].transform;
         }
     }
 
+    // Return if the enemy position based on the turret position is less than the targetingRange
     protected bool CheckTargetIsInRange()
     {
         if (target == null) return false;
@@ -155,10 +147,12 @@ public class Turret : TowerBase
     public override void OpenTurretMenu()
     {
         turretMenu.SetActive(true);
+
         SetUpgradeText();
         SetSellText();
+
+        // Show the range the turret has.
         DrawRange();
-        // DrawRange();
     }
 
     public void CloseTurretMenu()
@@ -177,6 +171,7 @@ public class Turret : TowerBase
         sellText.text = "Sell: " + SellProfit.ToString();
     }
 
+    // Get the radius based on the targeting range, and make 100 points for the line renderer.
     private void DrawRange()
     {
         int size = 100;
@@ -203,12 +198,14 @@ public class Turret : TowerBase
 
     public void Upgrade()
     {
+        // If turret is max level
         if (level == 3)
         {
             StartCoroutine(ShowAndHideMessage());
             return;
         }
 
+        // If player doesn't have enough money.
         if (CalculateUpgradeCost() > LevelManager.main.currency)
         {
             MessageHandler.main.ShowMessage();
@@ -225,6 +222,7 @@ public class Turret : TowerBase
         // Set current tower components to the new prefab
         TowerUpgrades towerToUpgradeTo = BuildManager.main.GetSelectedTower().upgrades[level - 2];
 
+        // Set the turret sprite, bulletprefab and crossbow sprite to the new tower.
         gameObject.GetComponent<SpriteRenderer>().sprite = towerToUpgradeTo.prefab.GetComponent<SpriteRenderer>().sprite;
         bulletPrefab = towerToUpgradeTo.prefab.GetComponent<Turret>().bulletPrefab;
         crossbow.GetComponent<SpriteRenderer>().sprite = towerToUpgradeTo.prefab.GetComponent<Turret>().crossbow.GetComponent<SpriteRenderer>().sprite;
@@ -233,7 +231,6 @@ public class Turret : TowerBase
 
         bps = CalculateBPS();
         targetingRange = CalculateRange();
-        // rotationSpeed = CalculateRotation();
 
         CloseTurretMenu();
 
@@ -241,11 +238,9 @@ public class Turret : TowerBase
         {
             upgradeButton.image.color = Color.gray;
         }
-        // Debug.Log("New BPS: " + bps);
-        // Debug.Log("New Range: " + targetingRange);
-        // Debug.Log("New Cost: " + CalculateUpgradeCost());
     }
 
+    // Show message, wait 1 second and hide message.
     private IEnumerator ShowAndHideMessage()
     {
         maxLevelUI.SetActive(true);
@@ -253,6 +248,8 @@ public class Turret : TowerBase
         maxLevelUI.SetActive(false);
     }
 
+
+    // Calculate upgrades and cost based on the level
     protected float CalculateBPS()
     {
         return bpsBase * Mathf.Pow(level, 0.6f);
@@ -272,6 +269,7 @@ public class Turret : TowerBase
     {
         return Mathf.RoundToInt(baseUpgradeCost * Mathf.Pow(level, 0.8f));
     }
+
 
     // Comment this when exporting
 #if UNITY_EDITOR

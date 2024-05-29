@@ -22,11 +22,12 @@ public class Health : MonoBehaviour
     {
         health -= damage;
 
-        // Call the onEnemyDestroy event and destroy the enemy.
         if (health <= 0 && !isDestroyed)
         {
+            // Call the onEnemyDestroy event and add money to the player for killing an enemy.
             EnemySpawner.onEnemyDestroy.Invoke();
             LevelManager.main.IncreaseCurrency(currencyWorth);
+
             isDestroyed = true;
             Destroy(gameObject);
         }

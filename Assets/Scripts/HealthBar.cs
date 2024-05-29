@@ -23,6 +23,7 @@ public class HealthBar : MonoBehaviour
 
     private void Start()
     {
+        // Set slider values
         healthBarSlider = healthBar.GetComponent<Slider>();
         healthBarSlider.maxValue = 100;
         healthBarSlider.value = maxHealth;
@@ -33,6 +34,8 @@ public class HealthBar : MonoBehaviour
         if (healthBarSlider.value > 0)
         {
             healthBarSlider.value -= damage;
+
+            // Double check if enemy health is lower than 0 then call the GameOverHandler event.
             if (healthBarSlider.value <= 0)
             {
                 GameOverHandler.onGameOver.Invoke();

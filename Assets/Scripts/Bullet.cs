@@ -13,6 +13,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float bulletSpeed = 5f;
     [SerializeField] private int bulletDamage = 1;
     [SerializeField] private float waitDelayBeforeDestroying = 0.2f;
+    [SerializeField] private float destroyBulletTime = 7f;
 
     private Transform target;
 
@@ -26,11 +27,12 @@ public class Bullet : MonoBehaviour
 
     private void Start()
     {
+        // Makes sure bullet get's destroyed after ... (7) seconds.
         StartCoroutine(DestroyIfNotCollided());
     }
 
 
-    // Follow the direction of the enemy.
+    // Add velocity to the direction of the enemy
     void FixedUpdate()
     {
         if (!target) return;
@@ -39,12 +41,6 @@ public class Bullet : MonoBehaviour
 
         rb.velocity = direction * bulletSpeed;
 
-    }
-
-    private IEnumerator DestroyIfNotCollided()
-    {
-        yield return new WaitForSeconds(7);
-        Destroy(gameObject);
     }
 
     // If the bullet collides with the enemy, wait for slight delay else the arrow wouldn't visible if enemy is close to the turret.
@@ -60,8 +56,15 @@ public class Bullet : MonoBehaviour
     {
         yield return new WaitForSeconds(waitDelayBeforeDestroying);
 
+        // Call the TakeDamage function in the health script of the enemy.
         _other.gameObject.GetComponent<Health>().TakeDamage(bulletDamage);
 
+        Destroy(gameObject);
+    }
+
+    private IEnumerator DestroyIfNotCollided()
+    {
+        yield return new WaitForSeconds(destroyBulletTime);
         Destroy(gameObject);
     }
 }

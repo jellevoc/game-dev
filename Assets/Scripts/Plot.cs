@@ -23,12 +23,16 @@ public class Plot : MonoBehaviour
 
     private void OnMouseEnter()
     {
+        // Don't show color change if either conditions are met.
         if (PauseMenu.isPaused || GameOverHandler.main.isGameOver) return;
+
+        // If player hovers over enemypath make it clear that you can't place turret on the path.
         if (gameObject.tag == "EnemyTile")
         {
             sr.color = occupiedPlotHoverColor;
             return;
         }
+
         sr.color = hoverColor;
     }
 
@@ -55,8 +59,10 @@ public class Plot : MonoBehaviour
         }
 
 
+        // Get selected tower from the shop menu.
         Tower towerToBuild = BuildManager.main.GetSelectedTower();
 
+        // If player doesn't have enough money
         if (towerToBuild.cost > LevelManager.main.currency)
         {
             MessageHandler.main.ShowMessage();
@@ -66,7 +72,7 @@ public class Plot : MonoBehaviour
         LevelManager.main.SpendCurrency(towerToBuild.cost);
 
 
-        // Fix torret position on plot
+        // Update position on Y axis so it fit's better.
         Vector3 position = transform.position;
         position.y += 0.5f;
 
@@ -74,13 +80,6 @@ public class Plot : MonoBehaviour
         towerObj = Instantiate(towerToBuild.prefab, position, Quaternion.identity);
         turret = towerObj.GetComponent<Turret>();
         PlaySFX();
-
-
-        // if (turret == null)
-        // {
-        //     Debug.Log("here");
-        //     turret = towerObj.GetComponent<TurretSlowmo>();
-        // }
     }
 
     protected void PlaySFX()
@@ -90,6 +89,7 @@ public class Plot : MonoBehaviour
         sfx.src.Play();
     }
 
+    // Conditions to check if player can place turret.
     private bool CanHoverOrPlace()
     {
         return !!(MenuManager.main.IsHoveringMenu() || Menu.main.IsHoveringMenu()

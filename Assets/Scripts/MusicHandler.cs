@@ -17,7 +17,7 @@ public class MusicHandler : MonoBehaviour
 
     private void Awake()
     {
-
+        // Check if main has already been instanced (by going to the main menu multiple times). If there already is an instance, destroy it
         if (main != null)
         {
             Destroy(gameObject);
@@ -25,8 +25,10 @@ public class MusicHandler : MonoBehaviour
         }
         main = this;
 
+        // So it stays active when loading a new scene
         DontDestroyOnLoad(gameObject);
 
+        // Set event
         onSliderChanged.AddListener(ChangeVolume);
     }
 

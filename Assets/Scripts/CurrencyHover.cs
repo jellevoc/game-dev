@@ -17,7 +17,6 @@ public class CurrencyHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
     public void OnPointerExit(PointerEventData _eventData)
     {
-        Debug.Log("Exit");
         currencyMenu.SetActive(true);
         bitcoinAddressMenu.SetActive(false);
     }

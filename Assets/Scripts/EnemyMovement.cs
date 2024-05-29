@@ -22,12 +22,13 @@ public class EnemyMovement : MonoBehaviour
     {
         enemy = EnemySpawner.main.GetSelectedEnemy();
         baseSpeed = moveSpeed;
-        // Set the target to the first point (Not the startPoint!)
+        // Set the target to the first point in array (Not the startPoint!)
         target = LevelManager.main.path[pathIndex];
     }
 
     void Update()
     {
+        // If the distance between the enemy and the position of the point is less than 0.1f set target to the next point
         if (Vector2.Distance(target.position, transform.position) <= 0.1f)
         {
             pathIndex++;
@@ -35,8 +36,12 @@ public class EnemyMovement : MonoBehaviour
             // If the enemy reaches the last point
             if (pathIndex == LevelManager.main.path.Length)
             {
+                // Call the onEnemyDestroy event
                 EnemySpawner.onEnemyDestroy.Invoke();
+
+                // Remove health from player
                 HealthBar.main.RemoveHealth(enemy.damage);
+
                 Destroy(gameObject);
                 return;
             }
@@ -47,6 +52,7 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
+    // Add velocity to the enemy in the direction of the next point
     private void FixedUpdate()
     {
         Vector2 direction = (target.position - transform.position).normalized;
