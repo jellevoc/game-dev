@@ -19,7 +19,6 @@ public class Turret : TowerBase
     [SerializeField] protected GameObject maxLevelUI;
     [SerializeField] protected TextMeshProUGUI upgradeText;
     [SerializeField] protected TextMeshProUGUI sellText;
-    [SerializeField] protected LineRenderer lineRenderer;
 
     [Header("Attributes")]
     [SerializeField] protected float targetingRange = 2.5f;
@@ -48,14 +47,13 @@ public class Turret : TowerBase
         sellButton.onClick.AddListener(() => Sell(BuildManager.main.GetSelectedTower(), level, baseUpgradeCost));
 
         turretMenu.SetActive(false);
-
-        lineRenderer.useWorldSpace = false;
     }
 
 
 
     protected virtual void Update()
     {
+
         if (target == null)
         {
             FindTarget();
@@ -151,8 +149,6 @@ public class Turret : TowerBase
         SetUpgradeText();
         SetSellText();
 
-        // Show the range the turret has.
-        DrawRange();
     }
 
     public void CloseTurretMenu()
@@ -169,31 +165,6 @@ public class Turret : TowerBase
     {
         int SellProfit = CalculateSellCost(BuildManager.main.GetSelectedTower(), level, baseUpgradeCost);
         sellText.text = "Sell: " + SellProfit.ToString();
-    }
-
-    // Get the radius based on the targeting range, and make 100 points for the line renderer.
-    private void DrawRange()
-    {
-        int size = 100;
-        lineRenderer.positionCount = size;
-
-        for (int currentStep = 0; currentStep < size; currentStep++)
-        {
-            float circumferenceProgress = (float)currentStep / (size - 1);
-
-            float currentRadian = circumferenceProgress * 2 * Mathf.PI;
-
-            float xScaled = Mathf.Cos(currentRadian);
-            float yScaled = Mathf.Sin(currentRadian);
-
-            float x = targetingRange * 1.7f * xScaled;
-            float y = targetingRange * 1.7f * yScaled;
-            float z = 0;
-
-            Vector3 currentPosition = new Vector3(x, y, z);
-
-            lineRenderer.SetPosition(currentStep, currentPosition);
-        }
     }
 
     public void Upgrade()
@@ -262,7 +233,8 @@ public class Turret : TowerBase
 
     protected float CalculateRange()
     {
-        return targetingRangeBase * Mathf.Pow(level, 0.4f);
+        float newRange = targetingRangeBase * Mathf.Pow(level, 0.4f);
+        return newRange;
     }
 
     protected int CalculateUpgradeCost()
