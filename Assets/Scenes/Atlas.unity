@@ -481,8 +481,12 @@ PrefabInstance:
       value: EnemyTile (17)
       objectReference: {fileID: 0}
     - target: {fileID: 2902168236306267016, guid: 2fff1c98ce2404f3c968a0b1a8f82a51, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 2902168236306267016, guid: 2fff1c98ce2404f3c968a0b1a8f82a51, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.017582
+      value: 9.0117
       objectReference: {fileID: 0}
     - target: {fileID: 2902168236306267016, guid: 2fff1c98ce2404f3c968a0b1a8f82a51, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1296,7 +1300,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -38, y: 406}
+  m_AnchoredPosition: {x: -38, y: 469}
   m_SizeDelta: {x: 500, y: 110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &151186101
@@ -3742,10 +3746,10 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.12941177, g: 0.12941177, b: 0.12941177, a: 0.7607843}
+  m_BackGroundColor: {r: 0.52156866, g: 0.5568628, b: 0.23921569, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
-  m_FOVAxisMode: 0
+  m_FOVAxisMode: 1
   m_Iso: 200
   m_ShutterSpeed: 0.005
   m_Aperture: 16
@@ -3765,9 +3769,9 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 34
+  field of view: 73.36088
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 7.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -14579,7 +14583,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1800, y: 0}
+  m_AnchoredPosition: {x: 1619, y: 0}
   m_SizeDelta: {x: 300, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1881732905
