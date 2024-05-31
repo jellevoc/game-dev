@@ -1,15 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyMovement : MonoBehaviour
 {
 
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private AudioSource src;
+    [SerializeField] private AudioClip enemyDeathSound;
 
     [Header("Attributes")]
     [SerializeField] public float moveSpeed = 2f;
+
+    [Header("Events")]
+    public static UnityEvent onEnemyDie = new UnityEvent();
 
     private Enemy enemy;
 
@@ -20,10 +26,20 @@ public class EnemyMovement : MonoBehaviour
 
     void Start()
     {
+        onEnemyDie.AddListener(PlayDeathSound);
+
+        src.volume = 0.1f;
+        src.clip = enemyDeathSound;
+
         enemy = EnemySpawner.main.GetSelectedEnemy();
         baseSpeed = moveSpeed;
         // Set the target to the first point in array (Not the startPoint!)
         target = LevelManager.main.path[pathIndex];
+    }
+
+    private void PlayDeathSound()
+    {
+        src.Play();
     }
 
     void Update()
