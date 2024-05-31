@@ -29,11 +29,11 @@ public class HealthBar : MonoBehaviour
         healthBarSlider.value = maxHealth;
     }
 
-    public bool RemoveHealth(int damage)
+    public bool RemoveHealth(int _damage)
     {
         if (healthBarSlider.value > 0)
         {
-            healthBarSlider.value -= damage;
+            healthBarSlider.value -= _damage;
 
             // Double check if enemy health is lower than 0 then call the GameOverHandler event.
             if (healthBarSlider.value <= 0)

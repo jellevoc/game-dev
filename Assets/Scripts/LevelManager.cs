@@ -25,17 +25,17 @@ public class LevelManager : MonoBehaviour
         currency = baseIncome;
     }
 
-    public void IncreaseCurrency(int amount)
+    public void IncreaseCurrency(int _amount)
     {
-        currency += amount;
+        currency += _amount;
     }
 
     // Return bool so we can check if player has enough money to buy (true: player has enough money) | (false: player doesnt have enough money)
-    public bool SpendCurrency(int amount)
+    public bool SpendCurrency(int _amount)
     {
-        if (amount <= currency)
+        if (_amount <= currency)
         {
-            currency -= amount;
+            currency -= _amount;
             return true;
         }
         else

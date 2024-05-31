@@ -44,12 +44,12 @@ public class Bullet : MonoBehaviour
     }
 
     // If the bullet collides with the enemy, wait for slight delay else the arrow wouldn't visible if enemy is close to the turret.
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnCollisionEnter2D(Collision2D _other)
     {
         if (hasCollided) return;
         hasCollided = true;
 
-        StartCoroutine(DestroyAfterDelay(other));
+        StartCoroutine(DestroyAfterDelay(_other));
     }
 
     private IEnumerator DestroyAfterDelay(Collision2D _other)
