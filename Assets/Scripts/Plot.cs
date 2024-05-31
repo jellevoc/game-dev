@@ -11,6 +11,8 @@ public class Plot : MonoBehaviour
     [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Color hoverColor = new Color(255, 255, 255, 180);
     [SerializeField] private Color occupiedPlotHoverColor = new Color(190, 0, 0, 180);
+    [SerializeField] private AudioSource src;
+    [SerializeField] private AudioClip turretPlaceSound;
 
     public GameObject towerObj;
     public TowerBase turret;
@@ -85,9 +87,9 @@ public class Plot : MonoBehaviour
 
     protected void PlaySFX()
     {
-        SFXHandler sfx = SFXHandler.main;
-        sfx.src.clip = sfx.sfxTowerPlace;
-        sfx.src.Play();
+        src.volume = 0.4f;
+        src.clip = turretPlaceSound;
+        src.Play();
     }
 
     // Conditions to check if player can place turret.

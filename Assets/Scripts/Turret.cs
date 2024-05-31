@@ -19,6 +19,9 @@ public class Turret : TowerBase
     [SerializeField] protected GameObject maxLevelUI;
     [SerializeField] protected TextMeshProUGUI upgradeText;
     [SerializeField] protected TextMeshProUGUI sellText;
+    [SerializeField] protected AudioSource src;
+    [SerializeField] protected AudioClip sellSound;
+    [SerializeField] protected AudioClip arrowShoot;
 
     [Header("Attributes")]
     [SerializeField] protected float targetingRange = 2.5f;
@@ -44,12 +47,34 @@ public class Turret : TowerBase
 
         // Set events
         upgradeButton.onClick.AddListener(Upgrade);
-        sellButton.onClick.AddListener(() => Sell(BuildManager.main.GetSelectedTower(), level, baseUpgradeCost));
+        sellButton.onClick.AddListener(SellTurret);
 
         turretMenu.SetActive(false);
+
+        src.clip = sellSound;
+        src.volume = 1f;
     }
 
+    protected void SellTurret()
+    {
+        PlaySellSound();
+        StartCoroutine(DestroyAfterSound());
+    }
 
+    protected void PlaySellSound()
+    {
+        src.volume = 1f;
+        src.clip = sellSound;
+        src.Play();
+    }
+
+    IEnumerator DestroyAfterSound()
+    {
+        yield return new WaitForSeconds(sellSound.length / 1.5f);
+
+        Sell(BuildManager.main.GetSelectedTower(), level, baseUpgradeCost);
+
+    }
 
     protected virtual void Update()
     {
@@ -103,9 +128,8 @@ public class Turret : TowerBase
 
     protected void ShootSFX()
     {
-        SFXHandler sfx = SFXHandler.main;
-        sfx.src.clip = sfx.sfxCrossbowShoot;
-        sfx.src.Play();
+        src.clip = arrowShoot;
+        src.Play();
     }
 
     protected void FindTarget()
