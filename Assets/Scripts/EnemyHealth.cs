@@ -29,7 +29,10 @@ public class Health : MonoBehaviour
             LevelManager.main.IncreaseCurrency(currencyWorth);
 
             isDestroyed = true;
+
             Destroy(gameObject);
+
+
         }
     }
 }

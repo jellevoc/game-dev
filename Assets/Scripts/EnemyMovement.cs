@@ -28,7 +28,7 @@ public class EnemyMovement : MonoBehaviour
     {
         onEnemyDie.AddListener(PlayDeathSound);
 
-        src.volume = 0.1f;
+        src.volume = 0.3f;
         src.clip = enemyDeathSound;
 
         enemy = EnemySpawner.main.GetSelectedEnemy();
