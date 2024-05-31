@@ -1,13 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEditor.VersionControl;
 
 public class MessageHandler : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Animator anim;
+
+    [Header("Attributes")]
+    [SerializeField] private float messageDelay = 1f;
 
     public static MessageHandler main;
 
@@ -21,14 +22,18 @@ public class MessageHandler : MonoBehaviour
     public void ShowMessage()
     {
         anim.gameObject.SetActive(true);
+
+        // Make sure it isn't already running
         if (anim.GetBool("ShowMessage") == true) return;
+
         StartCoroutine(ShowAndHideMessage());
     }
 
     private IEnumerator ShowAndHideMessage()
     {
+        // Show message, wait ... (1) second and hide message
         anim.SetBool("ShowMessage", true);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(messageDelay);
         anim.SetBool("ShowMessage", false);
     }
 }

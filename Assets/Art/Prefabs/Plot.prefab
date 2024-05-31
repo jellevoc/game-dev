@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sr: {fileID: 8475636423579533276}
-  hoverColor: {r: 1, g: 1, b: 1, a: 0.78431374}
+  hoverColor: {r: 0.5, g: 0.49292454, b: 0.49292454, a: 0.78431374}
+  occupiedPlotHoverColor: {r: 255, g: 255, b: 255, a: 180}
   towerObj: {fileID: 0}
   turret: {fileID: 0}

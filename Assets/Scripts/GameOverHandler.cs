@@ -18,26 +18,32 @@ public class GameOverHandler : MonoBehaviour
     [Header("Events")]
     public static UnityEvent onGameOver = new UnityEvent();
 
+    // Set static variable and events
     private void Awake()
     {
         main = this;
         onGameOver.AddListener(GameOver);
     }
 
+    // Show the gameovermenu. Set the wavetext in the menu with the current wave and set the timeScale to 0 so the game is actually paused.
     private void GameOver()
     {
         gameOverMenu.SetActive(true);
         isGameOver = true;
+
         waveText.text = WaveHandler.main.currentWave.ToString();
+
         Time.timeScale = 0f;
     }
 
+    // Make sure game is actually running and reload scene.
     public void RestartGame()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    // Load menu
     public void EnterMainMenu()
     {
         Time.timeScale = 1f;

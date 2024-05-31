@@ -17,17 +17,20 @@ public class VictoryHandler : MonoBehaviour
         onGameWon.AddListener(GameWon);
     }
 
+    // Show gameWonMenu and pause game
     private void GameWon()
     {
         gameWonMenu.SetActive(true);
         GameOverHandler.main.isGameOver = true;
+
         Time.timeScale = 0f;
     }
 
+    // Reload current scene.
     public void RestartGame()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void EnterMainMenu()
