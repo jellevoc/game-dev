@@ -17,9 +17,9 @@ public class Health : MonoBehaviour
         baseHealth = health;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int _damage)
     {
-        health -= damage;
+        health -= _damage;
 
         if (health <= 0 && !isDestroyed)
         {
