@@ -33,6 +33,7 @@ public class Plot : MonoBehaviour
             return;
         }
 
+        Debug.Log("Hover");
         sr.color = hoverColor;
     }
 
