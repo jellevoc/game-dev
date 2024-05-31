@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] private float bulletSpeed = 5f;
     [SerializeField] private int bulletDamage = 1;
     [SerializeField] private float waitDelayBeforeDestroying = 0.1f;
-    [SerializeField] private float destroyBulletTime = 1.5f;
+    [SerializeField] private float destroyBulletTime = 0.5f;
 
     private Transform target;
 
